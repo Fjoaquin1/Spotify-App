@@ -1,5 +1,20 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+import re
+
+playlist = input("Ingresa la URL de la playlist: ")
+
+
+# Define the regular expression pattern
+pattern = r'/([^/]+)(?=\?)'
+
+# Match the pattern in the URL
+match = re.search(pattern, playlist)
+
+if match:
+    extracted_text = match.group(1)
+else:
+    print("No match found")
 
 # Configura tus credenciales de la aplicación de Spotify
 client_id = 'df86d46e27044324a2e17e266fea66e8'
@@ -12,10 +27,10 @@ client_credentials_manager = SpotifyClientCredentials(client_id=client_id, clien
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 # Reemplaza 'PLAYLIST_ID' con el ID de la playlist que deseas consultar
-playlist_id = '54OxI9WILCh4LgEwEupPpf'
+# playlist_id = '54OxI9WILCh4LgEwEupPpf'
 
 # Obtén la información de la playlist
-playlist_info = sp.playlist_tracks(playlist_id)
+playlist_info = sp.playlist_tracks(extracted_text)
 
 
 
